@@ -72,18 +72,40 @@ class imovelController extends Controller
 
 	public function edit($id){
 
+		$imovel = Imovel::find($id);
+		return view('imoveis.edit', compact('imovel'));
 
 	}
 
 
 	public function update(Request $request, $id){
 
-        //
+		$validador = $this->validarFormulario($request);
+
+		if($validador->fails()){
+
+			return redirect()->back()->withErrors($validador->errors());
+		}
+
+		$imovel = Imovel::find($id);
+		$dados = $request->all();
+		$imovel->update($dados);
+
+		return redirect()->route('imoveis.index');
+
+	}
+
+
+	public function remover($id){
+
+		$imovel = Imovel::find($id);
+		return view('imoveis.delete', compact('imovel'));
 	}
 
 
 	public function destroy($id){
 
-        //
+		Imovel::find($id)->delete();
+		return redirect()->route('imoveis.index');
 	}
 }
