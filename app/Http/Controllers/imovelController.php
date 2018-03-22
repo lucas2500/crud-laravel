@@ -32,9 +32,10 @@ class imovelController extends Controller
 
 	public function index(){
 
+		$imoveis = Imovel::all();
+		return view('imoveis.index', compact('imoveis'));
 
 	}
-
 
 	public function create(){
 
@@ -50,7 +51,7 @@ class imovelController extends Controller
 
 		if($validador->fails()){
 
-			 return redirect()->back()->withErrors($validador->errors());
+			return redirect()->back()->withErrors($validador->errors());
 		}
 
 		$dados = $request->all();
@@ -64,13 +65,14 @@ class imovelController extends Controller
 
 	public function show($id){
 
-        //
+		$imovel = Imovel::find($id);
+		return view('imoveis.show', compact('imovel'));
 	}
 
 
 	public function edit($id){
 
-        //
+
 	}
 
 
