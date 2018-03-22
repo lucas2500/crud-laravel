@@ -4,90 +4,84 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Imovel;
+use Validator;
 
 class imovelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-       
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+	protected function validarFormulario($request){
+
+		$validador = Validator::make($request->all(), [
+
+			"descricao" => "required",
+			"logradouroEndereco" => "required",
+			"bairroEndereco" => "required",
+			"numeroEndereco" => "required | numeric",
+			"cepEndereco" => "required",
+			"cidadeEndereco" => "required",
+			"preco" => "required | numeric",
+			"qtdQuartos" => "required | numeric",
+			"tipo" => "required",
+			"finalidade" => "required",
+		]);
+
+		return $validador;
+
+	}
 
 
-    public function create()
-    {
-        return view('imoveis.create');
-    }
+	public function index(){
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
 
-    public function store(Request $request)
-    {
-        
-        $dados = $request->all();
-        Imovel::create($dados);
+	}
 
-        return redirect()->route('imoveis.index');
 
-    }
+	public function create(){
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+		return view('imoveis.create');
+	}
+
+
+
+
+	public function store(Request $request){
+
+		$validador = $this->validarFormulario($request);
+
+		if($validador->fails()){
+
+			 return redirect()->back()->withErrors($validador->errors());
+		}
+
+		$dados = $request->all();
+		Imovel::create($dados);
+
+		return redirect()->route('imoveis.index');
+
+	}
+
+
+
+	public function show($id){
+
         //
-    }
+	}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+	public function edit($id){
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
         //
-    }
+	}
+
+
+	public function update(Request $request, $id){
+
+        //
+	}
+
+
+	public function destroy($id){
+
+        //
+	}
 }

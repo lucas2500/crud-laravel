@@ -31,7 +31,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="qtdQuartos">Quantidade de Quartos</label>
-                        <input type="number" class="form-control" placeholder="Quantidade de Quartos" required name="qtdQuartos">
+                        <input type="text" class="form-control" placeholder="Quantidade de Quartos" required name="qtdQuartos">
                     </div>
                 </div>
             </div>
